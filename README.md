@@ -98,6 +98,7 @@ Contract-Nerd/
 |   `-- Spring 2025/
 |-- .env.example
 |-- .gitignore
+|-- LICENSE
 |-- README.md
 `-- requirements.txt
 ```
@@ -114,6 +115,7 @@ Historical archives, local IDE metadata, and runtime upload artifacts are intent
 | `requirements.txt` | Python dependency lock list for Flask, OpenAI-compatible client calls, PDF parsing, and utility libraries. |
 | `.gitignore` | Keeps virtual environments, local secrets, generated uploads, caches, archives, IDE files, and temporary files out of git. |
 | `.env.example` | Template for local runtime configuration. Copy it to `.env` and add your own API key. |
+| `LICENSE` | MIT License for the original ContractNerd code and repository documentation. |
 
 ### `Code/`
 
@@ -184,10 +186,10 @@ Project data, reference documents, sample contracts, and evaluation/supporting m
 | `Data/Sample clauses/04-07-2025/Risky clauses 3-17-2025.txt` | Risky clauses imported from the March 17, 2025 set. |
 | `Data/Sample clauses/04-07-2025/Results.txt` | Results from the April 7, 2025 clause experiment. |
 | `Data/Sample clauses/04-21-2025/Results.txt` | Results from the April 21, 2025 clause experiment. |
-| `Data/Sample clauses/Rullings/` | Ruling-related risky-clause notes. The folder name preserves the original spelling. |
-| `Data/Sample clauses/Rullings/Risky clauses 2-20-2025.txt` | Risky-clause ruling notes from February 20, 2025. |
-| `Data/Sample clauses/Rullings/Risky clauses 3-17-2025.txt` | Risky-clause ruling notes from March 17, 2025. |
-| `Data/Sample clauses/Rullings/Risky clauses 4-7-2025.txt` | Risky-clause ruling notes from April 7, 2025. |
+| `Data/Sample clauses/Rulings/` | Ruling-related risky-clause notes. |
+| `Data/Sample clauses/Rulings/Risky clauses 2-20-2025.txt` | Risky-clause ruling notes from February 20, 2025. |
+| `Data/Sample clauses/Rulings/Risky clauses 3-17-2025.txt` | Risky-clause ruling notes from March 17, 2025. |
+| `Data/Sample clauses/Rulings/Risky clauses 4-7-2025.txt` | Risky-clause ruling notes from April 7, 2025. |
 | `Data/Tests/` | Sample text test inputs and outputs used during development. |
 | `Data/Tests/Sample testing.txt` to `Sample testing 5.txt` | Iterative sample testing files. |
 
@@ -381,6 +383,14 @@ If the provider is not OpenAI-compatible, update the client creation and chat co
 - `Code/base/main.py` contains development paths from an earlier local environment. Treat it as a scratch runner and update paths before use.
 - The project currently supports PDF uploads only.
 - The analysis depends on LLM output format. If you modify prompts, update the parsing logic in `Code/app.py` accordingly.
+
+## License
+
+The original ContractNerd source code and repository documentation are released under the MIT License. See `LICENSE` for details.
+
+The legal reference PDFs, sample contracts, and other third-party or source-derived materials under `Data/` and `Documentation/` may be subject to their original source terms and are included for research and reproducibility context. Verify those source terms before redistributing or using those materials commercially.
+
+The published article is open access under the Creative Commons Attribution (CC BY 4.0) license as stated by MDPI.
 
 ## Legal and Research Disclaimer
 
