@@ -1,4 +1,6 @@
 # from clause_generation import clause_generation
+import os
+
 from clause_comparison import clause_comparison
 
 def main():
@@ -8,7 +10,7 @@ def main():
     output_file   = "D:/Downloads/Academics/Capstone Project/Data/Risky Clauses/Rental/New York/risky_clauses.txt"
     law_path      = "D:/Downloads/Academics/Capstone Project/Data/Regulations/Residential tenants’ rights guide.pdf"#,"D:/Downloads/Academics/Capstone Project/Data/Regulations/The Complete Guide on Landlord Tenant Laws - New York.pdf"
     api_base      = "https://api.sambanova.ai/v1"
-    api_key       = "893bd5f1-b41e-4d17-ab1d-3ee3c7cba82b"
+    api_key       = os.environ.get("SAMBANOVA_API_KEY")
     model         = 'Meta-Llama-3.3-70B-Instruct'
     role          = "user"
     temperature   = 0.1
@@ -21,6 +23,9 @@ def main():
     # )
 
     legal_doc_path = f"D:/Downloads/Academics/Capstone Project/Data/Regulations/Rental/New York/regulations.pdf"
+
+    if not api_key:
+        raise RuntimeError("Set SAMBANOVA_API_KEY before running this script.")
 
     # Compare clauses
     final_evaluation = clause_comparison(

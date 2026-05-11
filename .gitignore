@@ -1,15 +1,56 @@
-# Ignore virtual environment
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
 venv/
+.venv/
+env/
+ENV/
 
-# Ignore archive folders
-Code/base/archive/
-Code/ui/archive/
+# Local secrets and runtime configuration
+.env
+.env.*
+!.env.example
 
-# Ignore python-generated folders
-**/__pycache__/
+# Flask and local runtime output
+uploads/
+Code/uploads/
+instance/
+*.log
 
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
 
-# Ignore pkl files
+# Notebook and editor state
+.ipynb_checkpoints/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS and Office temporary files
+.DS_Store
+Thumbs.db
+~$*
+*.tmp
+
+# Generated data artifacts
 *.pkl
 
+# Historical archives are kept out of the active repository.
+Data/Archive/
+Documentation/Archive/
+Code/ui/templates/archive/
+Code/base/archive/
+
+# Local scratch files
 Code/test.py

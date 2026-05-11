@@ -1,7 +1,0 @@
-Finish migrating code from notebooks to .py files                                 -------> Musonda
-Finish hooking the ui to the backend                                              -------> Musonda
-Develop page for displaying analysis results
-Continue iteratively redefining "risky" clauses (with Prof Gillette)              -------> Yuge & Musonda
-Develop Llama prompts to suggest changes to "risky" clauses                       -------> Kevin
-Develop code to output the appropriate text (i.e., a reworded clause, or judgment that a cluases is unenforceable)
-Develop Llama prompts to identify missing clauses that make contract incomplete

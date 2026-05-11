@@ -12,7 +12,7 @@ def read_pdf_pymupdf(file_path):
             text += page.get_text()
     return text
 
-def extract_info(document, prompt, client, model, role, temperature, top_p, max_tokens):
+def extract_with_llm(document, prompt, client, model, role, temperature, top_p, max_tokens):
     """
     Extracts information from the given document using the specified LLM model.
     """

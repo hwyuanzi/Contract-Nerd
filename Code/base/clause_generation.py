@@ -1,7 +1,8 @@
 import pickle
+import os
 import time
 import openai
-from base.utils.functions import read_pdf_pymupdf, extract_info  # If publishing the code using flask
+from Code.base.utils.functions import read_pdf_pymupdf, extract_with_llm  # If publishing the code using flask
 # from utils.functions import read_pdf_pymupdf, extract_info  # If testing locally
 
 def clause_generation(contract_path, output_file, model, role, api_base, api_key, temperature, top_p, max_tokens, retries = 5):
@@ -59,7 +60,7 @@ def clause_generation(contract_path, output_file, model, role, api_base, api_key
     contract_text = read_pdf_pymupdf(contract_path)
 
     # Extract clauses from the contract
-    clauses = extract_info(
+    clauses = extract_with_llm(
         document = contract_text,
         prompt = "Identify the contract clauses in this contract, detailing all figures and necessary specifics. Do not use any \\n characters within individual clauses - only use it to separate clauses, all parts of an individual clause must be written without any \\n characters. Include the clause name and detail in the same line (e.g., rent:...). Don't number the clauses:",
         client = client,
@@ -88,12 +89,16 @@ def clause_generation(contract_path, output_file, model, role, api_base, api_key
     return transformed_clauses
 
 if __name__ == "__main__":
+    api_key = os.environ.get("SAMBANOVA_API_KEY")
+    if not api_key:
+        raise RuntimeError("Set SAMBANOVA_API_KEY before running this script.")
+
     transformed_clauses = clause_generation(
         contract_path = "D:/Downloads/Academics/Capstone Project/Data/Gold Standards/Rental/New York/Contract 1.pdf",
         output_file   = "D:/Downloads/Academics/Capstone Project/Data/Risky Clauses/RentalNew York/risky_clauses.pkl",
         model         = 'Meta-Llama-3.1-405B-Instruct',
         role          = "user",
-        api_key       = "893bd5f1-b41e-4d17-ab1d-3ee3c7cba82b",
+        api_key       = api_key,
         api_base      = "https://api.sambanova.ai/v1",
         temperature   = 0.1,
         top_p         = 1.0,

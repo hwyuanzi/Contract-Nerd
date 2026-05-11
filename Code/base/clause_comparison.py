@@ -1,4 +1,5 @@
 import pickle
+import os
 import openai
 import json
 from Code.base.utils.functions import read_pdf_pymupdf, extract_info  # If publishing the code using flask
@@ -198,13 +199,17 @@ def clause_comparison(contract_path, law_path, risky_clauses, model, role, api_b
     return comparison3
 
 if __name__ == "__main__":
+    api_key = os.environ.get("SAMBANOVA_API_KEY")
+    if not api_key:
+        raise RuntimeError("Set SAMBANOVA_API_KEY before running this script.")
+
     final_evaluation  = clause_comparison(
         contract_path="D:/Downloads/Academics/Capstone Project/Data/Contracts/Rental/New York/Contract 7.pdf",
         law_path      = "D:/Downloads/Academics/Capstone Project/Data/Regulations/Rental/New York/regulations.txt",
         risky_clauses = "D:/Downloads/Academics/Capstone Project/Data/Risky Clauses/Rental/New York/risky_clauses.pkl",
         model         = 'Meta-Llama-3.3-70B-Instruct',
         role          = "user",
-        api_key       = "893bd5f1-b41e-4d17-ab1d-3ee3c7cba82b",
+        api_key       = api_key,
         api_base      = "https://api.sambanova.ai/v1",
         temperature   = 0.1,
         top_p         = 1.0,

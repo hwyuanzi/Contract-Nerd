@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import time
 from datetime import datetime
 import traceback
+from dotenv import load_dotenv
 
 # Set the working directory to the project root (Code directory)
 # os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -12,6 +13,7 @@ import traceback
 from Code.base.clause_comparison import clause_comparison
 
 app = Flask(__name__, template_folder = 'ui/templates')
+load_dotenv()
 
 # Get the project root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -21,6 +23,10 @@ UPLOAD_FOLDER      = 'uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+SAMBANOVA_API_KEY = os.environ.get("SAMBANOVA_API_KEY")
+SAMBANOVA_API_BASE = os.environ.get("SAMBANOVA_API_BASE", "https://api.sambanova.ai/v1")
+SAMBANOVA_MODEL = os.environ.get("SAMBANOVA_MODEL", "Meta-Llama-3.3-70B-Instruct")
 
 # Function to check allowed file extensions
 def allowed_file(filename):
@@ -49,6 +55,12 @@ def analyze():
         if not jurisdiction or not contract_type:
             return jsonify({"error": "Please select both jurisdiction and contract type"}), 400
 
+        if not SAMBANOVA_API_KEY:
+            return jsonify({
+                "error": "Missing SambaNova API key",
+                "message": "Set SAMBANOVA_API_KEY in your environment or in a local .env file."
+            }), 500
+
         # File handling
         contract_path = None
         if contract_file and allowed_file(contract_file.filename):
@@ -72,10 +84,10 @@ def analyze():
             contract_path = contract_path,
             law_path      = legal_resources['regulations'],
             risky_clauses = legal_resources['risky_clauses'],
-            model         = 'Meta-Llama-3.3-70B-Instruct',
+            model         = SAMBANOVA_MODEL,
             role          = "user",
-            api_key       = "893bd5f1-b41e-4d17-ab1d-3ee3c7cba82b",
-            api_base      = "https://api.sambanova.ai/v1",
+            api_key       = SAMBANOVA_API_KEY,
+            api_base      = SAMBANOVA_API_BASE,
             temperature   = 0.1,
             top_p         = 0.1,
             max_tokens    = 8192

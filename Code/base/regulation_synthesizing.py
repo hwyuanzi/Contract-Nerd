@@ -1,7 +1,7 @@
 import os
 import glob
 import openai
-from base.utils.functions import read_pdf_pymupdf, extract_info  # If publishing the code using flask
+from Code.base.utils.functions import read_pdf_pymupdf, extract_with_llm  # If publishing the code using flask
 # from utils.functions import read_pdf_pymupdf, extract_info  # If testing locally
 
 def synthesize_regulations(source_folder, model, role, api_key, api_base, temperature, top_p, max_tokens):
@@ -19,7 +19,7 @@ def synthesize_regulations(source_folder, model, role, api_key, api_base, temper
         print(f"Processing: {pdf_path}")
         text = read_pdf_pymupdf(pdf_path)
 
-        clauses = extract_info(
+        clauses = extract_with_llm(
             document    = text,
             prompt      = "Extract legal provisions and clauses exactly as stated in the document. Return them as a numbered list. Do not rephrase or summarize, include the exact text in the document.",
             client      = client,
@@ -61,6 +61,9 @@ def synthesize_regulations(source_folder, model, role, api_key, api_base, temper
 
 
 if __name__ == "__main__":
+    api_key = os.environ.get("SAMBANOVA_API_KEY")
+    if not api_key:
+        raise RuntimeError("Set SAMBANOVA_API_KEY before running this script.")
 
     def save_clauses_to_txt(clause_sets, output_path):
         combined_clauses = set()
@@ -80,7 +83,7 @@ if __name__ == "__main__":
         source_folder = "D:/Downloads/Academics/Capstone Project/Data/Regulations/Rental/New York/Source",
         model         = 'Meta-Llama-3.3-70B-Instruct',
         role          = "user",
-        api_key       = "893bd5f1-b41e-4d17-ab1d-3ee3c7cba82b",
+        api_key       = api_key,
         api_base      = "https://api.sambanova.ai/v1",
         temperature   = 0.1,
         top_p         = 0.1,
